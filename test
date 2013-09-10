@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+RESULT=0
+
+for file in $(ls exercises)
+do
+    DIFFOUTPUT=$(diff data/out/${file%'.awk'} <(awk -f exercises/$file data/in/${file%'.awk'}))
+    EXITSTATUS=$?
+
+    if [ $EXITSTATUS != 0 ]
+    then
+      printf "\nFailed on: $file\n$DIFFOUTPUT\n"
+    fi
+
+    RESULT=$(( RESULT | EXITSTATUS ))
+done
+
+if [ $RESULT == 0 ]
+then
+  echo "All tests passed."
+fi
