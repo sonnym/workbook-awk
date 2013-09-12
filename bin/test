@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+RESULT=0
+
+for file in $(ls exercises/)
+do
+    EXITSTATUS=$(./bin/run ${file%'.awk'})
+    RESULT=$(( RESULT | EXITSTATUS ))
+done
+
+if [ $RESULT == 0 ]
+then
+  echo "All tests passed."
+fi
