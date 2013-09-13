@@ -1,0 +1,10 @@
+file data/in/3-15, line 12: gsub is now a built-in function
+	/\// { gsub(/\/([^\/]|\\\/)+\//, "", line) }
+file data/in/3-15, line 13: sub is now a built-in function
+	/#/  { sub(/#.*/, "", line) }
+file data/in/3-15, line 28: function is now a keyword
+	function warn(s) {
+file data/in/3-15, line 29: sub is now a built-in function
+	sub(/^[ \t]+/, "")
+file data/in/3-15, line 30: FNR is now a built-in variable
+	printf("file %s, line %d: %s\n\t%s\n", FILENAME, FNR, s, $0)
