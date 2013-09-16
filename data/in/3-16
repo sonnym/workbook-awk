@@ -1,0 +1,20 @@
+BEGIN {
+  unused_var = 0  
+}
+
+{ used_arr[NR] = $0 }
+
+END {
+  for(used_idx in used_arr) {
+    printf("%d %d %s", used_idx, unused_idx, used_fn(used_arr[used_idx]))
+    printf("%d %s", used_idx, unused_arr[used_idx])
+  }
+}
+
+function unused_fn(n) {
+  return n
+}
+
+function used_fn(n, unused_parameter) {
+  return n
+}

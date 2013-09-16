@@ -1,0 +1,5 @@
+file data/in/3-16, line 10: identifier unused_arr used only once
+file data/in/3-16, line 14: function unused_fn declared but never used
+file data/in/3-16, line 18: identifier unused_parameter used only once
+file data/in/3-16, line  2: identifier unused_var used only once
+file data/in/3-16, line  9: identifier unused_idx used only once
