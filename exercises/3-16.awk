@@ -62,5 +62,5 @@ function note_usage(identifier, line, arr) {
 function warn(arr, message) {
   for (i in arr)
     if (arr[i] != -1)
-      printf(message, FILENAME, arr[i], i) | "sort"
+      printf(message, FILENAME, arr[i], i) | "sort -n -k4"
 }
