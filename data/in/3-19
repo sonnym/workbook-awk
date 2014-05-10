@@ -1,0 +1,14 @@
+check	1021
+to	Champagne Unlimited
+amount	123.10
+date	1/1/87
+
+deposit
+amount	500.00
+date	1/1/87
+
+check	1022
+date	1/2/87
+amont	45.10
+to	Getwell Drug Store
+tax	medical
