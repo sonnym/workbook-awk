@@ -1,0 +1,57 @@
+BEGIN {
+  srcfile = ARGV[1]
+  ARGV[1] = "" # remaining files are data
+  tempfile = "asm.temp"
+
+  n = split("const get put ld st add sub jpos jz j halt", x)
+  for (i = 1; i <=n; i++) { # create table of op codes
+    op[x[i]] = i - 1
+    r_op[i - 1] = x[i]
+  }
+
+  # ASSEMBLER PASS 1
+  FS = "[ \t]+"
+
+  while (getline <srcfile > 0) {
+    sub(/#.*/, "")       # strip comments
+    symtab[$1] = nextmem # remember label location
+
+    if ($2 != "") {      # save op, addr if present
+      print $2 "\t" $3 >tempfile
+      nextmem++
+    }
+  }
+  close(tempfile)
+
+  # ASSEMBLER PASS 2
+  nextmem = 0
+  while (getline <tempfile > 0) {
+    loc = $2
+
+    if (loc !~ /^[0-9]*$/) {    # if symbolic address
+      loc = symtab[loc] # replace by numeric value
+    }
+
+    mem[nextmem++] = 1000 * op[$1] + loc  # pack into word
+  }
+
+  # INTERPRETER
+  for (pc = 0; pc >= 0;) {
+    addr = mem[pc] % 1000
+    code = int(mem[pc++] / 1000)
+
+    printf("%2d:\t%s\t%d\t%d\n", pc, r_op[code], addr, acc)
+
+    if      (code == op["get"])  { getline acc }
+    else if (code == op["put"])  { print acc }
+    else if (code == op["st"])   { mem[addr] = acc }
+    else if (code == op["ld"])   { acc  = mem[addr] }
+    else if (code == op["add"])  { acc += mem[addr] }
+    else if (code == op["sub"])  { acc -= mem[addr] }
+    else if (code == op["jpos"]) { if (acc >  0) pc = addr }
+    else if (code == op["jz"])   { if (acc == 0) pc = addr }
+    else if (code == op["j"])    { pc = addr }
+    else if (code == op["halt"]) { pc = -1 }
+    else                         { pc = -1 }
+  }
+}
