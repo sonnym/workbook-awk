@@ -28,23 +28,19 @@ BEGIN {
   # ASSEMBLER PASS 2
   nextmem = 0
   while (getline <tempfile > 0) {
-    sym_or_addr = $2
+    loc = $2
 
-    if (sym_or_addr !~ /^[0-9]*$/) { # if symbolic address
-      loc = symtab[sym_or_addr]      # replace by numeric value
+    if (loc !~ /^[0-9]*$/) {    # if symbolic address
+      loc = symtab[loc] # replace by numeric value
     }
 
-    mem[nextmem++] = 1000 * op[$1] + sym_or_addr  # pack into word
+    mem[nextmem++] = 1000 * op[$1] + loc  # pack into word
   }
 
   # INTERPRETER
   for (pc = 0; pc >= 0;) {
     addr = mem[pc] % 1000
     code = int(mem[pc++] / 1000)
-
-    print "addr: " addr
-    print "code: " code
-    print
 
     if      (code == op["get"])  { getline acc }
     else if (code == op["put"])  { print acc }
