@@ -1,0 +1,12 @@
+ 0:	03010		ld	zero
+ 1:	04011		st	sum
+ 2:	01000	loop	get	
+ 3:	08007		jz	done
+ 4:	05011		add	sum
+ 5:	04011		st	sum
+ 6:	09002		j	loop
+ 7:	03011	done	ld	sum
+ 8:	02000		put	
+ 9:	10000		halt	
+10:	00000	zero	const	0
+11:	00000	sum	const	
