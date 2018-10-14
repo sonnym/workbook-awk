@@ -1,0 +1,12 @@
+	ld	$000
+	st	$001
+$003	get	
+	jz	$002
+	add	$001
+	st	$001
+	j	$003
+$002	ld	$001
+	put	
+	halt	
+$000	const	
+$001	const	
