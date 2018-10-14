@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-DIFFOUTPUT=$(diff data/out/$1 <(awk -f exercises/$1.awk data/in/$1))
+FILE=$1
+
+DIFFOUTPUT=$(diff data/out/$1 <(awk -f exercises/$FILE.awk data/in/$FILE))
 EXITSTATUS=$?
 
 if [ $EXITSTATUS != 0 ]
 then
-  printf "\nFailed on: $file\n$DIFFOUTPUT\n"
+  printf "\nFailed on: $FILE\n$DIFFOUTPUT\n"
 fi
 
